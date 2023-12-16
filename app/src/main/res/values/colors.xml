@@ -2,8 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <!-- Mã màu với tên -->
     <color name="turquoise">#1abc9c</color>
     <color name="greenSea">#16a085</color>
     <color name="emerald">#2ecc71</color>
