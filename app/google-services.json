@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848711832673",
+    "project_id": "paw-chat-b4735",
+    "storage_bucket": "paw-chat-b4735.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848711832673:android:e421ecd39be4f1b08f0620",
+        "android_client_info": {
+          "package_name": "com.chatapp.pawchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdurrbEguZ7WQf_YCKwt1hq5MPg7h4PpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

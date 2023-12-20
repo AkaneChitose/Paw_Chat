@@ -1,8 +1,10 @@
-package com.chatapp.pawchat;
+package com.chatapp.pawchat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.chatapp.pawchat.R;
 
 public class MainActivity extends AppCompatActivity {
 
