@@ -1,5 +1,7 @@
 package com.chatapp.pawchat.ultilities;
 
+import java.util.HashMap;
+
 public class Constants {
 
     //THIS ONE USE IN LOGIN - SIGNIN - AUTH SESSION
@@ -33,6 +35,22 @@ public class Constants {
     public static final String KEY_RECEIVER_IMAGE = "receiverImage";
     public static final String KEY_LAST_MESSAGE = "lastMessage";
 
-    //
+    //FOR HANDLE STATUS ONLINE IS AVAILABLE OR NOT
     public static final String KEY_AVAILABILITY = "availability";
+
+    //FOR HANDLE NOTIFICATION
+    public static final String REMOTE_MSG_AUTH = "Authorization";
+    public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
+    public static final String REMOTE_MSG_DATA = "data";
+    public static final String REMOTE_MSG_REGISTRATION_IDS = "registration_ids";
+    public static  HashMap<String, String> remoteMsgHeaders = null;
+    public static HashMap<String, String> getRemoteMsgHeaders(){
+        if (remoteMsgHeaders == null){
+            remoteMsgHeaders = new HashMap<>();
+            remoteMsgHeaders.put(REMOTE_MSG_AUTH, "key=AAAAxZsq1GE:APA91bEIL1ZfkyXG1wja_XxtW_wLGImL70BSb8VQL4rK6ztMGVoe8Tq9k_R4LbGSZhsFLtKeP--_ewebSXJQhqBzNoOhWt459PuL0lHXHmJvBYQsXidvH6gj6-ODJdlRCLKIad-4WvaI");
+            remoteMsgHeaders.put(REMOTE_MSG_CONTENT_TYPE, "application/json");
+        }
+        return remoteMsgHeaders;
+    }
+
 }

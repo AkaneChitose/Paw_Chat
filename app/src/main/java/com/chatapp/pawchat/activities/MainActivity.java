@@ -57,32 +57,39 @@ public class MainActivity extends BaseActivity implements ConversionListener {
         setListeners();
         listenConversations();
     }
+
     private void init(){
         conversations = new ArrayList<>();
         conversationAdapter = new RecentConversationAdapter(conversations, this );
         binding.conversationsRecycler.setAdapter(conversationAdapter);
         database = FirebaseFirestore.getInstance();
     }
+
     private void setListeners(){
         binding.imageSignOut.setOnClickListener(v -> signOut());
         binding.fabNewChat.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), UserActivity.class)));
     }
+
     private void loadUserDetails() {
         binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
         byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         binding.imageProfile.setImageBitmap(bitmap);
     }
+
     private void getToken(){
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
     }
+
     private void updateToken(String token){
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN, token);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection(Constants.KEY_COLLECTION_USERS).document(preferenceManager.getString(Constants.KEY_USER_ID));
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
                 .addOnFailureListener(e -> showToast("Unable to update Token"));
         documentReference.update(Constants.KEY_FCM_TOKEN, token).addOnFailureListener(e -> showToast("Unable to rev!"));
     }
+
     private void signOut(){
         showToast("Signing Out...");
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -95,10 +102,12 @@ public class MainActivity extends BaseActivity implements ConversionListener {
             finish();
         }).addOnFailureListener(e -> showToast("Unable to sign out, try again"));
     }
+
     private void listenConversations(){
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).whereEqualTo(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID)).addSnapshotListener(eventListener);
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).whereEqualTo(Constants.KEY_RECEIVER_ID, preferenceManager.getString(Constants.KEY_USER_ID)).addSnapshotListener(eventListener);
     }
+
     private final EventListener<QuerySnapshot> eventListener = (value, error) -> {
         if (error != null) {
             return;
@@ -142,12 +151,14 @@ public class MainActivity extends BaseActivity implements ConversionListener {
             binding.progessBar.setVisibility(View.GONE);
         }
     };
+
     @Override
     public void onConversionClicked(User user){
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
     }
+
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
     }
