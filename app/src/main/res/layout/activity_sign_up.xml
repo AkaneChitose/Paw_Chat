@@ -15,13 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/background_shape_main">
 
         <RelativeLayout
-            android:layout_width="@dimen/_250sdp"
+            android:layout_width="@dimen/_240sdp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/background_input">
+            android:layout_marginTop="@dimen/_9sdp"
+            android:background="@drawable/background_input"
+            android:backgroundTint="@color/white">
 
             <TextView
                 android:id="@+id/title"
@@ -29,10 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/choco_cooky_regular"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:text="Create a new account"
                 android:textColor="@color/pumpkin"
-                android:textSize="@dimen/_18ssp"
+                android:textSize="@dimen/_25ssp"
                 android:textStyle="bold"/>
 
             <FrameLayout
@@ -46,8 +48,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageProfile"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
                     android:background="@drawable/background_image"
                     android:scaleType="centerCrop"
                     app:riv_oval="true"/>
@@ -70,33 +72,36 @@
             android:id="@+id/inputName"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_14ssp"
             android:background="@drawable/background_input"
             android:imeOptions="actionNext"
             android:hint="Name"
+            android:textColorHint="@color/midnightBlue"
             android:importantForAutofill="no"
             android:fontFamily="@font/choco_cooky_regular"
             android:inputType="text"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_15ssp"/>
 
         <EditText
             android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
+            android:layout_marginHorizontal="@dimen/_14ssp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/background_input"
             android:imeOptions="actionNext"
             android:hint="Email"
+            android:textColorHint="@color/midnightBlue"
             android:importantForAutofill="no"
             android:fontFamily="@font/choco_cooky_regular"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_15ssp"/>
 
         <EditText
             android:id="@+id/inputConfirmPassword"
@@ -106,13 +111,15 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionNext"
             android:hint="Password"
+            android:layout_marginHorizontal="@dimen/_14ssp"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:fontFamily="@font/choco_cooky_regular"
             android:paddingStart="@dimen/_16sdp"
+            android:textColorHint="@color/midnightBlue"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_15ssp"/>
         <EditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
@@ -121,17 +128,20 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionDone"
             android:hint="Confirm password"
+            android:textColorHint="@color/midnightBlue"
+            android:layout_marginHorizontal="@dimen/_14ssp"
             android:fontFamily="@font/choco_cooky_regular"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_15ssp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_40ssp"
             android:layout_marginTop="@dimen/_16sdp"
             android:animateLayoutChanges="true">
 
@@ -145,7 +155,7 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/choco_cooky_regular"
                 android:textStyle="bold"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_15ssp"
                 app:cornerRadius="@dimen/_30sdp"/>
 
             <ProgressBar
@@ -159,6 +169,7 @@
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_22ssp"
             android:background="@drawable/background_input">
             <TextView
                 android:id="@+id/txtSignIn"

@@ -15,13 +15,24 @@ public class Constants {
     //THIS ONE FOR LOGOUT
     public static final String KEY_FCM_TOKEN= "fcmToken";
 
-    //THIS ONE FOR USER DETAILS
+    //THIS ONE FOR USER HANDLE DETAILS FUNTION
     public static final String KEY_USER = "user";
 
-    //
+    //THIS ONE FOR HANDLE CHAT FUNCTION
     public static final String KEY_COLLECTION_CHAT = "chat";
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_RECEIVER_ID = "receiverId";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_STAMPTIME = "timestamp";
+
+    //THIS ONE FOR RECENT CONVERSATION LIST HANDLE
+    public static final String KEY_COLLECTION_CONVERSATIONS = "conversations";
+    public static final String KEY_SENDER_NAME = "senderName";
+    public static final String KEY_RECEIVER_NAME = "receiverName";
+    public static final String KEY_SENDER_IMAGE = "senderImage";
+    public static final String KEY_RECEIVER_IMAGE = "receiverImage";
+    public static final String KEY_LAST_MESSAGE = "lastMessage";
+
+    //
+    public static final String KEY_AVAILABILITY = "availability";
 }

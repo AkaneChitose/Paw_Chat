@@ -31,6 +31,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_13ssp"
         android:textStyle="bold"
+        android:fontFamily="@font/choco_cooky_regular"
         app:layout_constraintStart_toEndOf="@+id/imageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"/>
