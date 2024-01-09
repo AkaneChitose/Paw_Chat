@@ -8,31 +8,47 @@
     android:overScrollMode="never"
     android:padding="@dimen/_24sdp"
     android:scrollbars="none"
+    android:background="@drawable/bg_main"
     tools:context=".activities.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_30sdp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:text="Welcome back"
-            android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_input">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:text="Login to continue"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txtView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="Welcome back"
+                android:textColor="@color/pumpkin"
+                android:textSize="@dimen/_22ssp"
+                android:fontFamily="@font/choco_cooky_regular"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="Login to continue"
+                android:textColor="@color/orange"
+                android:layout_marginBottom="@dimen/_9sdp"
+                android:fontFamily="@font/choco_cooky_regular"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/inputEmail"
@@ -42,12 +58,13 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionNext"
             android:hint="Email"
+            android:fontFamily="@font/choco_cooky_regular"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_13ssp" />
 
         <EditText
             android:id="@+id/inputPassword"
@@ -57,12 +74,13 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionDone"
             android:hint="Password"
+            android:fontFamily="@font/choco_cooky_regular"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_13ssp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -78,25 +96,35 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                android:backgroundTint="@color/pumpkin"
+                android:fontFamily="@font/choco_cooky_regular"
                 android:textSize="@dimen/_13ssp"
-                app:cornerRadius="@dimen/_30sdp"/>
+                app:cornerRadius="@dimen/_30sdp" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/textCreateNewAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:text="Create a new account"
-            android:textSize="@dimen/_13ssp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/background_input">
+            <TextView
+                android:id="@+id/textCreateNewAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Create a new account"
+                android:fontFamily="@font/choco_cooky_regular"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
     </LinearLayout>
 </ScrollView>

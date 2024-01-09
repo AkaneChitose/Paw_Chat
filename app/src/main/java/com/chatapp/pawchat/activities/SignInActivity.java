@@ -11,11 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.chatapp.pawchat.databinding.ActivitySignInBinding;
 import com.chatapp.pawchat.ultilities.Constants;
 import com.chatapp.pawchat.ultilities.PreferenceManager;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.checkerframework.checker.units.qual.C;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -69,13 +66,13 @@ public class SignInActivity extends AppCompatActivity {
                 });
 
     }
-    private void loading(boolean isLoading){
-        if (isLoading){
+    private void loading(boolean isLoading) {
+        if (isLoading) {
             binding.btnSignIn.setVisibility(View.INVISIBLE);
             binding.progressBar.setVisibility(View.VISIBLE);
         } else {
-            binding.progressBar.setVisibility(View.VISIBLE);
-            binding.btnSignIn.setVisibility(View.INVISIBLE);
+            binding.progressBar.setVisibility(View.INVISIBLE);
+            binding.btnSignIn.setVisibility(View.VISIBLE);
         }
     }
     private Boolean isValidSignInDetails(){

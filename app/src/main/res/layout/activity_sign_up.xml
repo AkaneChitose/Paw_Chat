@@ -8,6 +8,7 @@
     android:overScrollMode="never"
     android:padding="@dimen/_24sdp"
     android:scrollbars="none"
+    android:background="@drawable/bg_main"
     tools:context=".activities.SignUpActivity">
 
     <LinearLayout
@@ -16,38 +17,54 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="Create a new account"
-            android:textColor="@color/pumpkin"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"/>
-
-        <FrameLayout
-            android:id="@+id/layoutImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imageProfile"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:background="@drawable/background_image"
-                android:scaleType="centerCrop"
-                app:riv_oval="true"/>
+            android:orientation="vertical"
+            android:background="@drawable/background_input">
 
             <TextView
-                android:id="@+id/textAddImage"
+                android:id="@+id/title"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Add Avatar"
+                android:fontFamily="@font/choco_cooky_regular"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Create a new account"
                 android:textColor="@color/pumpkin"
-                android:textSize="@dimen/_10ssp"/>
-        </FrameLayout>
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"/>
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:id="@+id/layoutImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_46sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_15sdp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:background="@drawable/background_image"
+                    android:scaleType="centerCrop"
+                    app:riv_oval="true"/>
+
+                <TextView
+                    android:id="@+id/textAddImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add Avatar"
+                    android:fontFamily="@font/choco_cooky_regular"
+                    android:textColor="@color/black"
+                    android:textStyle="bold|italic"
+                    android:textSize="@dimen/_12ssp"/>
+            </FrameLayout>
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/inputName"
@@ -58,6 +75,7 @@
             android:imeOptions="actionNext"
             android:hint="Name"
             android:importantForAutofill="no"
+            android:fontFamily="@font/choco_cooky_regular"
             android:inputType="text"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
@@ -73,6 +91,7 @@
             android:imeOptions="actionNext"
             android:hint="Email"
             android:importantForAutofill="no"
+            android:fontFamily="@font/choco_cooky_regular"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
@@ -89,6 +108,7 @@
             android:hint="Password"
             android:importantForAutofill="no"
             android:inputType="textPassword"
+            android:fontFamily="@font/choco_cooky_regular"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textColor="@color/pumpkin"
@@ -101,6 +121,7 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionDone"
             android:hint="Confirm password"
+            android:fontFamily="@font/choco_cooky_regular"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:paddingStart="@dimen/_16sdp"
@@ -119,8 +140,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:text="Register"
+                android:backgroundTint="@color/pumpkin"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
+                android:fontFamily="@font/choco_cooky_regular"
                 android:textStyle="bold"
                 android:textSize="@dimen/_13ssp"
                 app:cornerRadius="@dimen/_30sdp"/>
@@ -132,16 +155,22 @@
                 android:layout_gravity="center"
                 android:visibility="invisible"/>
         </FrameLayout>
-
-        <TextView
-            android:id="@+id/txtSignIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="Already have an account? Sign in"
-            android:textSize="@dimen/_13ssp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/background_input">
+            <TextView
+                android:id="@+id/txtSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Create a new account"
+                android:fontFamily="@font/choco_cooky_regular"
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>
