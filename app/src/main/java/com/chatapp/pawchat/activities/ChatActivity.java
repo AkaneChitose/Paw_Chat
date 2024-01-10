@@ -58,35 +58,55 @@ public class ChatActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding =ActivityChatBinding.inflate(getLayoutInflater());
+
+        // Khởi tạo và thiết lập giao diện người dùng
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Thiết lập nghe sự kiện cho danh sách và load thông tin người nhận
         setListListener();
         loadReceiverDetails();
+
+        // Khởi tạo các thành phần cần thiết
         init();
+
+        // Lắng nghe tin nhắn
         listenMessages();
     }
-    private void init(){
+
+    // Phương thức khởi tạo các thành phần
+    private void init() {
         preferenceManager = new PreferenceManager(getApplicationContext());
         chatMessages = new ArrayList<>();
-        chatAdapter = new ChatAdapter(getBitmapFromEncodedString(receiverUser.image), preferenceManager.getString(Constants.KEY_USER_ID), chatMessages);
+        chatAdapter = new ChatAdapter(
+                getBitmapFromEncodedString(receiverUser.image),
+                preferenceManager.getString(Constants.KEY_USER_ID),
+                chatMessages
+        );
         binding.chatRecyclerView.setAdapter(chatAdapter);
         database = FirebaseFirestore.getInstance();
     }
+
     private void sendMessage() {
+        // Tạo một HashMap để lưu trữ chi tiết của tin nhắn
+        // Phương thức này tạo một HashMap để lưu trữ chi tiết của tin nhắn, bao gồm ID của người gửi, ID của người nhận, nội dung tin nhắn và thời điểm.
         HashMap<String, Object> message = new HashMap<>();
+
+        // Thêm ID của người gửi và người nhận, nội dung tin nhắn và timestamp vào HashMap tin nhắn
         message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
         message.put(Constants.KEY_STAMPTIME, new Date());
 
-        // Add the message to the chat collection
+        // Thêm tin nhắn vào file "chat" trong cơ sở dữ liệu
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
 
-        // Check if there is an existing conversation
+        // Kiểm tra xem có cuộc trò chuyện tồn tại không
         if (convertionId != null) {
+            // Nếu có cuộc trò chuyện, cập nhật nó với tin nhắn mới
             updateConversion(binding.inputMessage.getText().toString());
         } else {
-            // Create a new conversation
+            // Nếu không có cuộc trò chuyện tồn tại, tạo một HashMap cuộc trò chuyện mới
             HashMap<String, Object> convertion = new HashMap<>();
             convertion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
             convertion.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
@@ -96,11 +116,15 @@ public class ChatActivity extends BaseActivity {
             convertion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
             convertion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
             convertion.put(Constants.KEY_STAMPTIME, new Date());
+
+            // Thêm cuộc trò chuyện mới vào cuộc trò chuyện trong cơ sở dữ liệu
             addConversation(convertion);
-            // Add the conversation to the conversations collection
         }
+
+        // Kiểm tra xem người nhận có Online
         if (!isReceiverAvailabel){
             try {
+                // Tạo mảng và đối tượng JSON cho thông báo FCM
                 JSONArray tokens = new JSONArray();
                 tokens.put(receiverUser.token);
                 JSONObject data = new JSONObject();
@@ -109,85 +133,123 @@ public class ChatActivity extends BaseActivity {
                 data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
                 data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
 
+                // Tạo một đối tượng JSON cho nội dung thông báo
                 JSONObject body = new JSONObject();
                 body.put(Constants.REMOTE_MSG_DATA, data);
                 body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
 
+                // Gửi thông báo FCM
                 sendNotification(body.toString());
-            }catch (Exception exception){
+            } catch (Exception exception){
+                // Xử lý các ngoại lệ
                 showToast(exception.getMessage());
             }
         }
+
+        // Xóa trường nhập sau khi gửi tin nhắn
         binding.inputMessage.setText(null);
     }
+
 
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private void sendNotification(String messageBody){
-        ApiClient.getClient().create(ApiService.class).sendMessage(Constants.getRemoteMsgHeaders(), messageBody).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.isSuccessful()){
-                    try {
-                        if (response.body() != null){
-                            JSONObject responseJson = new JSONObject(response.body());
-                            JSONArray results = responseJson.getJSONArray("results");
-                            if (responseJson.getInt("failure") == 1){
-                                JSONObject error = (JSONObject) results.get(0);
-                                showToast(error.getString("error"));
-                                return;
-                            }
-                        }
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                    showToast("Notification sent successfully");
-                }else {
-                    showToast("Error:" + response.code());
-                }
-            }
+    private void sendNotification(String messageBody) {
+        // Tạo một yêu cầu Retrofit thông qua API service
+        ApiClient.getClient().create(ApiService.class)
+                .sendMessage(Constants.getRemoteMsgHeaders(), messageBody)
+                .enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                        // Xử lý phản hồi khi yêu cầu thành công
+                        if (response.isSuccessful()) {
+                            try {
+                                // Kiểm tra xem phản hồi có dữ liệu không
+                                if (response.body() != null) {
+                                    // Parse JSON từ dữ liệu phản hồi
+                                    JSONObject responseJson = new JSONObject(response.body());
+                                    JSONArray results = responseJson.getJSONArray("results");
 
-            @Override
-            public void onFailure(@NonNull Call<String> call,@NonNull Throwable t) {
-                showToast(t.getMessage());
-            }
-        });
+                                    // Kiểm tra nếu có lỗi trong phản hồi
+                                    if (responseJson.getInt("failure") == 1) {
+                                        JSONObject error = (JSONObject) results.get(0);
+                                        showToast(error.getString("error"));
+                                        return;
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                // Xử lý ngoại lệ khi có lỗi parse JSON
+                                e.printStackTrace();
+                            }
+                            // Hiển thị thông báo khi thông báo được gửi thành công
+                            showToast("Notification sent successfully");
+                        } else {
+                            // Hiển thị thông báo lỗi khi yêu cầu không thành công
+                            showToast("Error:" + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                        // Xử lý khi yêu cầu thất bại
+                        showToast(t.getMessage());
+                    }
+                });
     }
 
     private void listenAvailavilityOfReceiver(){
-        database.collection(Constants.KEY_COLLECTION_USERS).document(receiverUser.id).addSnapshotListener(ChatActivity.this, (value, error) -> {
-            if (error != null){
-                return;
-            }
-            if (value != null){
-                if (value.getLong(Constants.KEY_AVAILABILITY) != null){
-                    int availability = Objects. requireNonNull(value.getLong(Constants.KEY_AVAILABILITY)).intValue();
-                    isReceiverAvailabel = availability == 1;
-                }
-                receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
-                if (receiverUser.image == null){
-                    receiverUser.image = value.getString(Constants.KEY_IMAGE);
-                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodedString(receiverUser.image));
-                    chatAdapter.notifyItemRangeInserted(0, chatMessages.size());
-                }
-            }
-            if (isReceiverAvailabel){
-                binding.textAvailability.setVisibility(View.VISIBLE);
-            }
-            else {
-                binding.textAvailability.setVisibility(View.GONE);
-            }
-        });
+        // Lắng nghe sự kiện thay đổi của tài khoản người nhận trong bảng Users
+        database.collection(Constants.KEY_COLLECTION_USERS)
+                .document(receiverUser.id)
+                .addSnapshotListener(ChatActivity.this, (value, error) -> {
+                    // Kiểm tra lỗi
+                    if (error != null){
+                        return;
+                    }
+
+                    // Kiểm tra giá trị trả về từ cơ sở dữ liệu
+                    if (value != null){
+                        // Lấy thông tin về sự khả dụng từ giá trị trả về
+                        if (value.getLong(Constants.KEY_AVAILABILITY) != null){
+                            int availability = Objects.requireNonNull(value.getLong(Constants.KEY_AVAILABILITY)).intValue();
+                            isReceiverAvailabel = availability == 1;
+                        }
+
+                        // Cập nhật token và hình ảnh của người nhận nếu chưa được cập nhật
+                        receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
+                        if (receiverUser.image == null){
+                            receiverUser.image = value.getString(Constants.KEY_IMAGE);
+                            // Cập nhật hình ảnh người nhận trong Adapter
+                            chatAdapter.setReceiverProfileImage(getBitmapFromEncodedString(receiverUser.image));
+                            chatAdapter.notifyItemRangeInserted(0, chatMessages.size());
+                        }
+                    }
+
+                    // Hiển thị trạng thái khả dụng của người nhận trên giao diện người dùng
+                    if (isReceiverAvailabel){
+                        binding.textAvailability.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.textAvailability.setVisibility(View.GONE);
+                    }
+                });
     }
 
+    /**
+     * Chuyển đổi một chuỗi ảnh đã mã hóa sang đối tượng Bitmap.
+     *
+     * @param encodedImage Chuỗi ảnh đã mã hóa
+     * @return Đối tượng Bitmap được tạo từ chuỗi ảnh đã mã hóa
+     */
     private Bitmap getBitmapFromEncodedString(String encodedImage){
+        // Kiểm tra xem chuỗi ảnh đã mã hóa có giá trị không
         if (encodedImage != null){
+            // Giải mã chuỗi ảnh và chuyển đổi thành mảng byte
             byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+            // Chuyển đổi mảng byte thành đối tượng Bitmap
             return BitmapFactory.decodeByteArray(bytes, 0 , bytes.length);
-        }
-        else {
+        } else {
+            // Trả về null nếu chuỗi ảnh đã mã hóa là null
             return null;
         }
     }
